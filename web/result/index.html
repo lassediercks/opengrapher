@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script>
+      let params = new URLSearchParams(document.location.search.substring(1));
+      console.log(params.get("html"));
+      window.addEventListener("load", function(event) {
+        document.body.innerHTML = params.get("html");
+        document.head.innerHTML = `<style>${params.get("css")}</style>`;
+        document.body.style.width = `${params.get("width")}px`;
+        document.body.style.height = `${params.get("height")}px`;
+      });
+    </script>
+  </head>
+  <body></body>
+</html>
