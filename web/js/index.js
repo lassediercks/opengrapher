@@ -6,12 +6,14 @@ window.addEventListener("load", function(event) {
   const cssInput = document.querySelector(".css");
   const iframe = document.querySelector(".result");
   const iframeDoc = iframe.contentWindow;
-
+  const THROTTLE_AMOUNT = 5000;
   // Default Values
 
   const htmlDefault = "<h1>Hi there!</h1>";
-  const cssDefault = "body{background: peachpuff;}";
-  const resultUrl = "https://csstoimg.herokuapp.com/result.html";
+  const cssDefault = `body{
+    background: peachpuff;
+  }`;
+  const resultUrl = "http://localhost:5000/result.html";
 
   let css = localStorage.getItem("css") || cssDefault;
   let html = localStorage.getItem("html") || htmlDefault;
@@ -48,8 +50,15 @@ window.addEventListener("load", function(event) {
 
   //   Initiation
 
-  iframeDoc.document.body.innerHTML =
-    localStorage.getItem("html") || htmlDefault;
+  widthInput.value = width;
+  heightInput.value = height;
+  cssInput.value = css;
+  iframeDoc.document.body.innerHTML = html;
+  iframe.style.width = `${width}px`;
+  iframe.style.height = `${height}px`;
+  iframeDoc.document.head.innerHTML = `<style>${css}</style>`;
+
+  // Generates the link with html and css as url parametes attached
 
   function updateLink() {
     let generatepath = "/generate/";
@@ -61,33 +70,23 @@ window.addEventListener("load", function(event) {
     )}${addition}`;
   }
 
+  // All the Evenet listeners
+
   htmlEditor.on("change", () => {
     htmlEditor.save();
     iframeDoc.document.body.innerHTML = htmlInput.value;
     localStorage.setItem("html", htmlInput.value);
-    html = escape(htmlInput.value);
+    html = htmlInput.value;
     return html;
   });
-
-  localStorage.getItem("css")
-    ? cssEditor.getDoc().setValue(localStorage.getItem("css"))
-    : cssDefault;
 
   cssEditor.on("change", () => {
     cssEditor.save();
     iframeDoc.document.head.innerHTML = `<style>${cssInput.value}</style>`;
     localStorage.setItem("css", cssInput.value);
-    css = escape(cssInput.value);
+    css = cssInput.value;
     return css;
   });
-
-  widthInput.value = localStorage.getItem("width") || width;
-  iframe.style.width = `${widthInput.value}px` || width;
-  heightInput.value = localStorage.getItem("height") || height;
-  iframe.style.height = `${heightInput.value}px` || height;
-
-  cssInput.value = localStorage.getItem("css") || cssDefault;
-  iframeDoc.document.head.innerHTML = `<style>${cssInput.value}</style>`;
 
   widthInput.addEventListener("input", () => {
     iframe.style.width = `${widthInput.value}px`;

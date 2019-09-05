@@ -6,15 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script>
-      let params = new URLSearchParams(document.location.search.substring(1));
-      console.log(params.get("html"));
+      const params = new URLSearchParams(document.location.search.substring(1));
       window.addEventListener("load", function(event) {
-        document.body.innerHTML = params.get("html");
-        document.head.innerHTML = `<style>${params.get("css")}</style>`;
-        document.body.style.width = `${params.get("width")}px`;
-        document.body.style.height = `${params.get("height")}px`;
+       
+        const iframe = document.querySelector(".result");
+        const iframeDoc = iframe.contentWindow;
+        iframeDoc.document.body.innerHTML = params.get("html");
+        iframe.style.width = `${params.get("width")}px`;
+        iframe.style.height = `${params.get("height")}px`;
+        iframeDoc.document.head.innerHTML = `<style>${params.get("css")}</style>`;
       });
     </script>
+    <style>
+    body{margin: 0;}
+    </style>
   </head>
-  <body></body>
+  <body>
+      <iframe frameborder="0" class="result">
+  </body>
 </html>
