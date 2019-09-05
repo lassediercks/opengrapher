@@ -1,6 +1,8 @@
 var express = require("express");
 var app = express();
-let url = process.env ? "http://csstoimg.herokuapp.com/" : "http://localhost:3000"
+let url = process.env
+  ? "http://csstoimg.herokuapp.com/"
+  : "http://localhost:3000";
 const validUrl = require("valid-url");
 const puppeteer = require("puppeteer");
 
@@ -10,7 +12,7 @@ async function createImage(req, res) {
 
   if (validUrl.isUri(req.params.content)) {
     const browser = await puppeteer.launch({
-      args: ["--disable-setuid-sandbox"]
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
 
     const page = await browser.newPage();
