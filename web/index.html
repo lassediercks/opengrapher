@@ -6,11 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script src="codemirror.js"></script>
-    <script src="htmlmixed/htmlmixed.js"></script>
+    <script src="htmlembedded.js"></script>
     <script src="css/css.js"></script>
-    <script src="./index.js"></script>
+    <script src="emmet-codemirror-plugin.js"></script>
+    <script src="index.js"></script>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="codemirror.css">
+    <link rel="stylesheet" href="icecoder.css">
   </head>
   <body>
       
@@ -29,31 +31,20 @@
             </span>
             <textarea class="css"></textarea>
         </div>
-    </div>
 
-    <main>
+        <div class="inputwrap">
+            Width
+            <input type="text" class="ogWidth">
+        </div>
+        <div class="inputwrap">
+            Height
+            <input type="text" class="ogHeight">
+        </div>
+        <a href="" target="_blank" class='resultlink'>Generate Image</a>
 
-    <div class="inputwrap">
-        Width
-        <input type="text" class="ogWidth">
     </div>
-    <div class="inputwrap">
-        Height
-        <input type="text" class="ogHeight">
-    </div>
-    <a href="" target="_blank" class='resultlink'>Go to result</a>
-
     <div class="preview">
-       Zoom <input type="range">
         <iframe frameborder="0" class="result">
     </div>
-    </main>
-
-    </iframe>
-
-        
-
-    </div>
-
   </body>
 </html>

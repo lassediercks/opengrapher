@@ -15,10 +15,23 @@ window.addEventListener("load", function(event) {
 
   myStorage = localStorage;
 
+  // Editor
+  const editorOptions = {
+    lineNumbers: true,
+    extraKeys: {
+      Tab: "emmetExpandAbbreviation",
+      Enter: "emmetInsertLineBreak"
+    },
+    smartIndent: true,
+    theme: "icecoder",
+    lineWrapping: true
+  };
+
   //   Initiation
 
   var htmlEditor = CodeMirror.fromTextArea(htmlInput, {
-    mode: "htmlmixed"
+    ...editorOptions,
+    mode: "text/html"
   });
 
   localStorage.getItem("html")
@@ -41,6 +54,7 @@ window.addEventListener("load", function(event) {
   });
 
   var cssEditor = CodeMirror.fromTextArea(cssInput, {
+    ...editorOptions,
     mode: "css"
   });
 

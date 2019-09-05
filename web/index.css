@@ -1,16 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: sans-serif;
   padding: 0;
   margin: 0;
+  display: flex;
   height: 100vh;
 }
 .htmlCss {
   padding: 1em;
-  display: flex;
   justify-content: space-between;
   background: #0e0e0e;
   color: white;
-  width: 100%;
+  width: 350px;
+  height: 100vh;
 }
 .inputwrap textarea {
   background: none;
@@ -20,15 +25,41 @@ body {
 }
 
 .inputwrap {
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
 }
 .inputwrap input {
+  margin-left: 0.5em;
+  font-family: monospace;
+  background: #1d1d1b;
+  padding: 0 1em;
+  width: 60px;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  height: 40px;
   font: inherit;
 }
 .htmlInput,
 .cssInput {
-  width: 49%;
+  margin-bottom: 1.25em;
+}
+.resultlink {
+  background: #307eff;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 1em;
+  text-align: center;
+  margin-top: 2em;
 }
 
 .result {
   box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.15);
+}
+
+.preview {
+  padding: 1em;
 }
