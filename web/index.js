@@ -70,11 +70,13 @@ window.addEventListener("load", function(event) {
   widthInput.addEventListener("input", () => {
     iframe.style.width = `${widthInput.value}px`;
     localStorage.setItem("width", widthInput.value);
+    width = widthInput.value;
   });
 
   heightInput.addEventListener("input", () => {
     iframe.style.height = `${heightInput.value}px`;
     localStorage.setItem("height", heightInput.value);
+    height = heightInput.value;
   });
 
   resultLink.addEventListener("mouseover", () => {

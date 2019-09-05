@@ -44,4 +44,4 @@ app.get("/generate/:content", async (req, res) => {
 
 app.use("/", express.static("web"));
 
-app.listen(3000);
+app.listen(process.env.PORT || 5000);
