@@ -8,8 +8,10 @@ window.addEventListener("load", function(event) {
 
   var iframe = document.querySelector(".result");
   var iframeDoc = iframe.contentWindow;
-  let css = escape(localStorage.getItem("css"));
-  let html = escape(localStorage.getItem("html"));
+  let css = escape(
+    localStorage.getItem("css") || "body{background: peachpuff;}"
+  );
+  let html = escape(localStorage.getItem("html") || "<h1>Hi there!</h1>");
   let width = localStorage.getItem("width") || 500;
   let height = localStorage.getItem("height") || 500;
 
@@ -31,16 +33,23 @@ window.addEventListener("load", function(event) {
     ...editorOptions
   });
 
+  htmlEditor
+    .getDoc()
+    .setValue(localStorage.getItem("html") || "<h1>Hi there!</h1>");
+
   var cssEditor = CodeMirror.fromTextArea(cssInput, {
     ...editorOptions,
     mode: "css"
   });
 
+  cssEditor
+    .getDoc()
+    .setValue(localStorage.getItem("css") || "body{background: peachpuff;}");
+
   //   Initiation
 
-  htmlEditor
-    .getDoc()
-    .setValue(localStorage.getItem("html") || "<h1>Hi there!</h1>");
+  iframeDoc.document.body.innerHTML =
+    localStorage.getItem("html") || "<h1>Hi there!</h1>";
 
   function updateLink() {
     let generatepath = "/generate/";
@@ -74,10 +83,8 @@ window.addEventListener("load", function(event) {
   heightInput.value = localStorage.getItem("height") || height;
   iframe.style.height = `${heightInput.value}px` || height;
 
-  htmlInput.value = localStorage.getItem("html");
-  iframeDoc.document.body.innerHTML = htmlInput.value;
-
-  cssInput.value = localStorage.getItem("css");
+  cssInput.value =
+    localStorage.getItem("css") || `body{background: peachpuff;}`;
   iframeDoc.document.head.innerHTML = `<style>${cssInput.value}</style>`;
 
   widthInput.addEventListener("input", () => {
