@@ -26,8 +26,8 @@ window.addEventListener("load", function(event) {
     : "";
 
   function updateLink() {
-    let generatepath = "http://localhost:3000/generate/";
-    let root = "http://localhost:3000/result.html";
+    let generatepath = "/generate/";
+    let root = "https://csstoimg.herokuapp.com/result.html";
     let addition = `?html=${html}&css=${css}&width=${width}&height=${height}`;
     resultLink.href = `${generatepath}${encodeURIComponent(root)}${addition}`;
   }

@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+let url = process.env ? "http://csstoimg.herokuapp.com/" : "http://localhost:3000"
 const validUrl = require("valid-url");
 const puppeteer = require("puppeteer");
 
