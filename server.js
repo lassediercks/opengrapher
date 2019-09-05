@@ -19,7 +19,7 @@ async function createImage(req, res) {
     await page.setViewport({
       width: parseInt(req.query.width, 10),
       height: parseInt(req.query.height, 10),
-      deviceScaleFactor: 1
+      deviceScaleFactor: 3
     });
     await page.goto(`${req.params.content}${req._parsedUrl.search}`, {
       waitUntil: "networkidle2"
