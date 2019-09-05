@@ -4,18 +4,21 @@ window.addEventListener("load", function(event) {
   const resultLink = document.querySelector(".resultlink");
   const htmlInput = document.querySelector(".html");
   const cssInput = document.querySelector(".css");
-  const htmlOutput = document.querySelector(".htmlresult");
+  const iframe = document.querySelector(".result");
+  const iframeDoc = iframe.contentWindow;
 
-  var iframe = document.querySelector(".result");
-  var iframeDoc = iframe.contentWindow;
-  let css = escape(
-    localStorage.getItem("css") || "body{background: peachpuff;}"
-  );
-  let html = escape(localStorage.getItem("html") || "<h1>Hi there!</h1>");
+  // Default Values
+
+  const htmlDefault = "<h1>Hi there!</h1>";
+  const cssDefault = "body{background: peachpuff;}";
+  const resultUrl = "https://csstoimg.herokuapp.com/result.html";
+
+  let css = localStorage.getItem("css") || cssDefault;
+  let html = localStorage.getItem("html") || htmlDefault;
   let width = localStorage.getItem("width") || 500;
   let height = localStorage.getItem("height") || 500;
 
-  myStorage = localStorage;
+  PixelateMeStorage = localStorage;
 
   // Editor
   const editorOptions = {
@@ -25,37 +28,37 @@ window.addEventListener("load", function(event) {
       Enter: "emmetInsertLineBreak"
     },
     smartIndent: true,
-    theme: "icecoder",
+    theme: "material",
     lineWrapping: true
   };
 
   var htmlEditor = CodeMirror.fromTextArea(htmlInput, {
+    mode: "htmlmixed",
     ...editorOptions
   });
 
-  htmlEditor
-    .getDoc()
-    .setValue(localStorage.getItem("html") || "<h1>Hi there!</h1>");
+  htmlEditor.getDoc().setValue(html);
 
   var cssEditor = CodeMirror.fromTextArea(cssInput, {
     ...editorOptions,
     mode: "css"
   });
 
-  cssEditor
-    .getDoc()
-    .setValue(localStorage.getItem("css") || "body{background: peachpuff;}");
+  cssEditor.getDoc().setValue(css);
 
   //   Initiation
 
   iframeDoc.document.body.innerHTML =
-    localStorage.getItem("html") || "<h1>Hi there!</h1>";
+    localStorage.getItem("html") || htmlDefault;
 
   function updateLink() {
     let generatepath = "/generate/";
-    let root = "https://csstoimg.herokuapp.com/result.html";
-    let addition = `?html=${html}&css=${css}&width=${width}&height=${height}`;
-    resultLink.href = `${generatepath}${encodeURIComponent(root)}${addition}`;
+    let addition = `?html=${escape(html)}&css=${escape(
+      css
+    )}&width=${width}&height=${height}`;
+    resultLink.href = `${generatepath}${encodeURIComponent(
+      resultUrl
+    )}${addition}`;
   }
 
   htmlEditor.on("change", () => {
@@ -68,7 +71,7 @@ window.addEventListener("load", function(event) {
 
   localStorage.getItem("css")
     ? cssEditor.getDoc().setValue(localStorage.getItem("css"))
-    : "body{background: peachpuff;}";
+    : cssDefault;
 
   cssEditor.on("change", () => {
     cssEditor.save();
@@ -83,8 +86,7 @@ window.addEventListener("load", function(event) {
   heightInput.value = localStorage.getItem("height") || height;
   iframe.style.height = `${heightInput.value}px` || height;
 
-  cssInput.value =
-    localStorage.getItem("css") || `body{background: peachpuff;}`;
+  cssInput.value = localStorage.getItem("css") || cssDefault;
   iframeDoc.document.head.innerHTML = `<style>${cssInput.value}</style>`;
 
   widthInput.addEventListener("input", () => {
