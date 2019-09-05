@@ -26,15 +26,17 @@ window.addEventListener("load", function(event) {
     : "";
 
   function updateLink() {
-    let root = "http://localhost:3000/result/";
-    resultLink.href = `${root}?html=${html}&css=${css}&width=${width}&height=${height}`;
+    let generatepath = "http://localhost:3000/generate/";
+    let root = "http://localhost:3000/result.html";
+    let addition = `?html=${html}&css=${css}&width=${width}&height=${height}`;
+    resultLink.href = `${generatepath}${encodeURIComponent(root)}${addition}`;
   }
 
   htmlEditor.on("change", () => {
     htmlEditor.save();
     iframeDoc.document.body.innerHTML = htmlInput.value;
     localStorage.setItem("html", htmlInput.value);
-    html = escape(htmlInput.value);
+    html = encodeURI(htmlInput.value);
     return html;
   });
 
@@ -50,7 +52,7 @@ window.addEventListener("load", function(event) {
     cssEditor.save();
     iframeDoc.document.head.innerHTML = `<style>${cssInput.value}</style>`;
     localStorage.setItem("css", cssInput.value);
-    css = escape(cssInput.value);
+    css = encodeURI(cssInput.value);
     return css;
   });
 

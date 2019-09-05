@@ -13,5 +13,7 @@
     "express": "^4.17.1",
     "puppeteer": "^1.19.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "valid-url": "^1.0.9"
+  }
 }
