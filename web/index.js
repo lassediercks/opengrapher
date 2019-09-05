@@ -36,7 +36,7 @@ window.addEventListener("load", function(event) {
     htmlEditor.save();
     iframeDoc.document.body.innerHTML = htmlInput.value;
     localStorage.setItem("html", htmlInput.value);
-    html = encodeURI(htmlInput.value);
+    html = escape(htmlInput.value);
     return html;
   });
 
@@ -52,7 +52,7 @@ window.addEventListener("load", function(event) {
     cssEditor.save();
     iframeDoc.document.head.innerHTML = `<style>${cssInput.value}</style>`;
     localStorage.setItem("css", cssInput.value);
-    css = encodeURI(cssInput.value);
+    css = escape(cssInput.value);
     return css;
   });
 
