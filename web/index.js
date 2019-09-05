@@ -10,8 +10,8 @@ window.addEventListener("load", function(event) {
   var iframeDoc = iframe.contentWindow;
   let css = escape(localStorage.getItem("css"));
   let html = escape(localStorage.getItem("html"));
-  let width = localStorage.getItem("width");
-  let height = localStorage.getItem("height");
+  let width = localStorage.getItem("width") || 500;
+  let height = localStorage.getItem("height") || 500;
 
   myStorage = localStorage;
 
@@ -27,16 +27,20 @@ window.addEventListener("load", function(event) {
     lineWrapping: true
   };
 
-  //   Initiation
-
   var htmlEditor = CodeMirror.fromTextArea(htmlInput, {
-    ...editorOptions,
-    mode: "text/html"
+    ...editorOptions
   });
 
-  localStorage.getItem("html")
-    ? htmlEditor.getDoc().setValue(localStorage.getItem("html"))
-    : "";
+  var cssEditor = CodeMirror.fromTextArea(cssInput, {
+    ...editorOptions,
+    mode: "css"
+  });
+
+  //   Initiation
+
+  htmlEditor
+    .getDoc()
+    .setValue(localStorage.getItem("html") || "<h1>Hi there!</h1>");
 
   function updateLink() {
     let generatepath = "/generate/";
@@ -53,14 +57,9 @@ window.addEventListener("load", function(event) {
     return html;
   });
 
-  var cssEditor = CodeMirror.fromTextArea(cssInput, {
-    ...editorOptions,
-    mode: "css"
-  });
-
   localStorage.getItem("css")
     ? cssEditor.getDoc().setValue(localStorage.getItem("css"))
-    : "";
+    : "body{background: peachpuff;}";
 
   cssEditor.on("change", () => {
     cssEditor.save();
@@ -70,10 +69,10 @@ window.addEventListener("load", function(event) {
     return css;
   });
 
-  widthInput.value = localStorage.getItem("width");
-  iframe.style.width = `${widthInput.value}px`;
-  heightInput.value = localStorage.getItem("height");
-  iframe.style.height = `${heightInput.value}px`;
+  widthInput.value = localStorage.getItem("width") || width;
+  iframe.style.width = `${widthInput.value}px` || width;
+  heightInput.value = localStorage.getItem("height") || height;
+  iframe.style.height = `${heightInput.value}px` || height;
 
   htmlInput.value = localStorage.getItem("html");
   iframeDoc.document.body.innerHTML = htmlInput.value;
