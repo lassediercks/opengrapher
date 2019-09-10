@@ -57,6 +57,20 @@ window.addEventListener("load", function(event) {
   iframe.style.height = `${height}px`;
   iframeDoc.document.head.innerHTML = `<style>${css}</style>`;
 
+  // From Url
+  const params = new URLSearchParams(document.location.search.substring(1));
+
+  iframeDoc.document.body.innerHTML = params.get("html");
+  iframe.style.width = `${params.get("width")}px`;
+  iframe.style.height = `${params.get("height")}px`;
+  iframeDoc.document.head.innerHTML = `<style>${params.get("css")}</style>`;
+  if (params.get("html")) {
+    htmlEditor.getDoc().setValue(params.get("html"));
+  }
+  if (params.get("css")) {
+    cssEditor.getDoc().setValue(params.get("css"));
+  }
+
   // Generates the link with html and css as url parametes attached
 
   function updateLink() {
@@ -72,7 +86,11 @@ window.addEventListener("load", function(event) {
   // Updates History
 
   function updateHistory() {
-    history.pushState({ html: 1 }, "html", "?blw=1");
+    history.pushState(
+      { data: 1 },
+      "data",
+      `?html=${encodeURI(html)}&css=${encodeURI(css)}`
+    );
   }
   // All the Evenet listeners
 
@@ -81,6 +99,7 @@ window.addEventListener("load", function(event) {
     iframeDoc.document.body.innerHTML = htmlInput.value;
     localStorage.setItem("html", htmlInput.value);
     html = htmlInput.value;
+    updateHistory();
     return html;
   });
 
@@ -89,6 +108,7 @@ window.addEventListener("load", function(event) {
     iframeDoc.document.head.innerHTML = `<style>${cssInput.value}</style>`;
     localStorage.setItem("css", cssInput.value);
     css = cssInput.value;
+    updateHistory();
     return css;
   });
 

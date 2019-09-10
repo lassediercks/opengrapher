@@ -1,3 +1,6 @@
+:root {
+  --sidebar-width: 400px;
+}
 * {
   box-sizing: border-box;
 }
@@ -8,7 +11,7 @@ body {
   margin: 0;
   display: flex;
   height: 100vh;
-  padding-left: 350px;
+  padding-left: var(--sidebar-width);
 }
 .htmlCss {
   position: fixed;
@@ -17,7 +20,7 @@ body {
   justify-content: space-between;
   background: #14161b;
   color: white;
-  width: 350px;
+  width: var(--sidebar-width);
   height: 100vh;
 }
 
@@ -64,4 +67,8 @@ body {
 
 .preview {
   padding: 1em;
+}
+
+.CodeMirror {
+  height: 100%;
 }
