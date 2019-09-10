@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <script>
+      window.addEventListener("load", function(event) {
+        const iframe = document.querySelector(".result");
+        const iframeDoc = iframe.contentWindow;
+        iframeDoc.document.body.innerHTML = `<%- html %>`;
+        iframe.style.width = `<%- width %>px`;
+        iframe.style.height = `<%- height %>px`;
+        iframeDoc.document.head.innerHTML = `<style><%- css %></style>`;
+      });
+    </script>
+  </head>
+  <body>
+    <iframe frameborder="0" class="result"></iframe>
+  </body>
+</html>

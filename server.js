@@ -1,28 +1,35 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
 const puppeteer = require("puppeteer");
 
-async function createImage(req, res) {
-  console.log(`${req.params.content}${req._parsedUrl.search}`);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use("/", express.static("web"));
 
-  let completeUrl = `${req.params.content}${req._parsedUrl.search}`;
+async function createImage(url, res, vpWidth, vpHeight) {
+  console.log(`
+  Url is ${url}
+  Width is ${vpWidth}
+  Height is ${vpHeight}
+  res is ${[res]}`);
   const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   });
 
   const page = await browser.newPage();
   await page.setViewport({
-    width: parseInt(req.query.width, 10),
-    height: parseInt(req.query.height, 10),
+    width: vpWidth,
+    height: vpHeight,
     deviceScaleFactor: 1
   });
-  await page.goto(completeUrl, {
+  await page.goto(url, {
     waitUntil: "networkidle2"
   });
 
   let file = await page.screenshot({});
   res.contentType("image/png");
-  console.log("created screenshot of ", completeUrl);
+  console.log("created screenshot of ", url);
 
   await browser.close();
 
@@ -32,10 +39,36 @@ async function createImage(req, res) {
 }
 
 app.get("/generate/:content", async (req, res) => {
-  console.log(req, res);
-  createImage(req, res);
+  let completeUrl = `${req.params.content}${req._parsedUrl.search}`;
+  createImage(
+    completeUrl,
+    res,
+    parseInt(req.query.width, 10),
+    parseInt(req.query.height, 10)
+  );
 });
 
-app.use("/", express.static("web"));
+// posttest
 
-app.listen(process.env.PORT || 5000);
+app.post("/generate", async (req, res) => {
+  app.set("data", req.body);
+  console.log(req.body);
+  let url = `http://localhost:5000/displayPost`;
+  createImage(
+    url,
+    res,
+    parseInt(app.get("data").width),
+    parseInt(app.get("data").height)
+  );
+});
+
+app.get("/displayPost", function(req, res) {
+  res.render("./degah.ejs", {
+    html: app.get("data").html,
+    css: app.get("data").css,
+    width: app.get("data").width,
+    height: app.get("data").height
+  });
+});
+
+app.listen(process.env.PORT || process.argv[2] || "3000");

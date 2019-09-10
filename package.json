@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js 5000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {},
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.7.1",
     "express": "^4.17.1",
+    "html-parse-stringify": "^1.0.3",
+    "node-html-parser": "^1.1.16",
     "puppeteer": "^1.19.0"
   }
 }

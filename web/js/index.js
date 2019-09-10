@@ -6,14 +6,13 @@ window.addEventListener("load", function(event) {
   const cssInput = document.querySelector(".css");
   const iframe = document.querySelector(".result");
   const iframeDoc = iframe.contentWindow;
-  const THROTTLE_AMOUNT = 5000;
   // Default Values
 
   const htmlDefault = "<h1>Hi there!</h1>";
   const cssDefault = `body{
     background: peachpuff;
   }`;
-  const resultUrl = "http://csstoimg.herokuapp.com/result.html";
+  const resultUrl = "http://localhost:5000/result.html";
 
   let css = localStorage.getItem("css") || cssDefault;
   let html = localStorage.getItem("html") || htmlDefault;
@@ -103,4 +102,28 @@ window.addEventListener("load", function(event) {
   resultLink.addEventListener("mouseover", () => {
     updateLink();
   });
+
+  // Post request test
+
+  // const postbutton = document.querySelector(".postbutton");
+  // console.log(typeof html);
+  // let data = {
+  //   width: width,
+  //   height: height,
+  //   html: html,
+  //   css: css
+  // };
+  // function performPostRequest() {
+  //   fetch("http://localhost:5000/generate", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(data)
+  //   });
+  // }
+
+  // postbutton.addEventListener("click", () => {
+  //   performPostRequest();
+  // });
 });
