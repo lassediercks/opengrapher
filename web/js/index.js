@@ -12,7 +12,7 @@ window.addEventListener("load", function(event) {
   const cssDefault = `body{
     background: peachpuff;
   }`;
-  const resultUrl = "http://localhost:5000/result.html";
+  const resultUrl = "http://csstoimg.herokuapp.com/result.html";
 
   let css = localStorage.getItem("css") || cssDefault;
   let html = localStorage.getItem("html") || htmlDefault;
@@ -69,6 +69,11 @@ window.addEventListener("load", function(event) {
     )}${addition}`;
   }
 
+  // Updates History
+
+  function updateHistory() {
+    history.pushState({ html: 1 }, "html", "?blw=1");
+  }
   // All the Evenet listeners
 
   htmlEditor.on("change", () => {

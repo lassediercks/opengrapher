@@ -50,25 +50,25 @@ app.get("/generate/:content", async (req, res) => {
 
 // posttest
 
-app.post("/generate", async (req, res) => {
-  app.set("data", req.body);
-  console.log(req.body);
-  let url = `http://localhost:5000/displayPost`;
-  createImage(
-    url,
-    res,
-    parseInt(app.get("data").width),
-    parseInt(app.get("data").height)
-  );
-});
+// app.post("/generate", async (req, res) => {
+//   app.set("data", req.body);
+//   console.log(req.body);
+//   let url = `http://localhost:5000/displayPost`;
+//   createImage(
+//     url,
+//     res,
+//     parseInt(app.get("data").width),
+//     parseInt(app.get("data").height)
+//   );
+// });
 
-app.get("/displayPost", function(req, res) {
-  res.render("./degah.ejs", {
-    html: app.get("data").html,
-    css: app.get("data").css,
-    width: app.get("data").width,
-    height: app.get("data").height
-  });
-});
+// app.get("/displayPost", function(req, res) {
+//   res.render("./degah.ejs", {
+//     html: app.get("data").html,
+//     css: app.get("data").css,
+//     width: app.get("data").width,
+//     height: app.get("data").height
+//   });
+// });
 
 app.listen(process.env.PORT || process.argv[2] || "3000");
