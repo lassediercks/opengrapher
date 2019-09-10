@@ -1,42 +1,13 @@
+const createImage = require("./node/createImage.js");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const puppeteer = require("puppeteer");
+
+const PORT = process.env.PORT || process.argv[2] || "3000";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/", express.static("web"));
-
-async function createImage(url, res, vpWidth, vpHeight) {
-  console.log(`
-  Url is ${url}
-  Width is ${vpWidth}
-  Height is ${vpHeight}
-  res is ${[res]}`);
-  const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
-  });
-
-  const page = await browser.newPage();
-  await page.setViewport({
-    width: vpWidth,
-    height: vpHeight,
-    deviceScaleFactor: 1
-  });
-  await page.goto(url, {
-    waitUntil: "networkidle2"
-  });
-
-  let file = await page.screenshot({});
-  res.contentType("image/png");
-  console.log("created screenshot of ", url);
-
-  await browser.close();
-
-  res.status(200);
-  res.send(file);
-  res.end();
-}
 
 app.get("/generate/:content", async (req, res) => {
   let completeUrl = `${req.params.content}${req._parsedUrl.search}`;
@@ -71,4 +42,6 @@ app.get("/generate/:content", async (req, res) => {
 //   });
 // });
 
-app.listen(process.env.PORT || process.argv[2] || "3000");
+app.listen(PORT);
+
+console.log(`Server is running at http://localhost:${PORT}`);
