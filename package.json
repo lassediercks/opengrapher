@@ -15,7 +15,7 @@
     "body-parser": "^1.19.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
-    "html-parse-stringify": "^1.0.3",
+    "html-parse-stringify": "^2.0.1",
     "node-html-parser": "^1.1.16",
     "puppeteer": "^1.19.0"
   }
